@@ -1,8 +1,8 @@
-const express = require('express');
-const taskRouter = require('./taskRouter');
+import express from 'express';
+import taskRouter from './taskRouter.js';
 const router = express.Router();
 
 
 router.use('/tasks', taskRouter)
 
-module.exports = router;
+export default router;
