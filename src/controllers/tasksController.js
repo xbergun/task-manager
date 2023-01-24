@@ -20,9 +20,6 @@ const updateTask = asyncErrorHandler(async (req, res, next) => {
   const { id } = req.params;
   const { title, description, done } = req.body;
   const task = await Task.findById(id);
-  if (!task) {
-    return res.status(404).json({ success: false, msg: "Task not found" });
-  }
   task.title = title ? title : task.title;
   task.description = description ? description : task.description;
   task.done = done;
