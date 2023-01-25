@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "0b2c83b5-15c6-4d69-a587-9b1e48f5bd8d",
+		"name": "Task Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16572558"
+	},
+	"item": [
+		{
+			"name": "Get Tasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/tasks",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\" : \"Deneme Task\",\r\n    \"description\" : \"Dene dsdsescription\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/tasks/add-task",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"tasks",
+						"add-task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"title\" : \"updateeed\",\r\n   \"description\" : \"updateeed sss\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/tasks/update-task/:id",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"tasks",
+						"update-task",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "63cfcb4c56533f9fad32acdes"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Task",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/tasks/delete-task/:id",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"tasks",
+						"delete-task",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "63cfbfec3bd173296b9aed98"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
