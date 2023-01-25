@@ -1,5 +1,10 @@
+//? Modules
 import asyncErrorHandler from "express-async-handler";
+
+//? Models
 import Task from "../models/Task.js";
+
+// Controllers functions
 
 const getAllTasks = asyncErrorHandler(async (req, res) => {
   const tasks = await Task.find();
