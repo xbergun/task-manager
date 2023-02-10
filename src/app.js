@@ -2,7 +2,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
-
+import ejs from 'ejs';
 //? Routers
 import routers from './routers/index.js';
 import connectToDb from './helpers/Database/ConnectToDb.js';
@@ -10,14 +10,20 @@ import connectToDb from './helpers/Database/ConnectToDb.js';
 //? Definitions
 const app = express();
 const __dirname = path.resolve() + '\\src';
-dotenv.config({ path: path.join(__dirname, './config/config.env') })
+dotenv.config()
 const PORT = process.env.PORT || 5000;
 
-//? Gelen isteklerin body'sini json formatında okuyabilmek için
+// set engine to ejs
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// set static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', routers)
+app.use('/', routers);
 
 
 connectToDb().then(() => {
