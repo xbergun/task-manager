@@ -2,14 +2,14 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
-import ejs from 'ejs';
+
 //? Routers
 import routers from './routers/index.js';
 import connectToDb from './helpers/Database/ConnectToDb.js';
 
 //? Definitions
 const app = express();
-const __dirname = path.resolve() + '\\src';
+const __dirname = path.resolve() + '//src';
 dotenv.config()
 const PORT = process.env.PORT || 5000;
 
