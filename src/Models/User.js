@@ -6,27 +6,32 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         trim: true,
-        minlength: 3,
         maxlength: 50
     },
     email: {
         type: String,
         required: true,
         trim: true,
-        minlength: 5,
+        unique: true,
+        match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         maxlength: 255
     },
     password: {
         type: String,
         required: true,
         trim: true,
-        minlength: 5,
         maxlength: 1024
     },
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    tasks : [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Task"
+        }
+    ]
 });
 
 export default mongoose.model("User", UserSchema);

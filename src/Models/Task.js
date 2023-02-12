@@ -8,12 +8,6 @@ const TaskSchema = new mongoose.Schema({
         trim: true,
         maxlength: [20, "Title cannot be more than 20 characters"],
     },
-    description: {
-        type: String,
-        required: [true, "Please add a description"],
-        trim: true,
-        maxlength: [100, "Description cannot be more than 100 characters"],
-    },
     done: {
         type: Boolean,
         default: false,
@@ -21,6 +15,11 @@ const TaskSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
+    },
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true,
     },
 });
 
