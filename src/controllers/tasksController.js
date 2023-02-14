@@ -7,20 +7,15 @@ import Task from "../models/Task.js";
 // Controllers functions
 
 const getAllTasks = asyncErrorHandler(async (req, res) => {
-  // const tasks = await Task.find();
-  // return res
-  //   .status(200)
-  //   .json({ success: true, msg: "Show all tasks", tasks: tasks });
-
-  res.render('index');
+  const tasks = await Task.find();
+  return res.render("home", { tasks });
 });
 
 const addNewTask = asyncErrorHandler(async (req, res, next) => {
-  const { title, description } = req.body;
-  const task = await Task.create({ title, description });
-  return res
-    .status(201)
-    .json({ success: true, msg: "Task created", task: task });
+  const {title} = req.body;
+  await Task.create({title});
+  return res.redirect('/tasks');
+
 });
 
 const updateTask = asyncErrorHandler(async (req, res, next) => {
