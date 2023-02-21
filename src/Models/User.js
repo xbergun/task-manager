@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
-
+import bcyrpt from "bcryptjs";
 const UserSchema = new Schema({
     name: {
         type: String,
@@ -32,6 +32,15 @@ const UserSchema = new Schema({
             ref: "Task"
         }
     ]
+});
+
+UserSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) {
+        next();
+    }
+    const salt = await bcyrpt.genSalt(10);
+    this.password = await bcyrpt.hash(this.password, salt);
+    next();
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);
