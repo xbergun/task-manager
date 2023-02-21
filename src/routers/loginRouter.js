@@ -1,8 +1,10 @@
 //? Modules
 import express from 'express';
 import asyncHandler from 'express-async-handler';
+import bcrypt from 'bcryptjs';
 //? Controllers
 import { getLoginPage } from '../controllers/authController.js';
+
 
 import User from '../models/User.js';
 
@@ -16,15 +18,6 @@ router.get('/register', (req, res) => {
     res.render('register');
 });
 
-router.post('/register', (req, res) => {
-    console.log(req.body);
-    res.redirect('/');
-});
-
-router.get('/allusers' , asyncHandler(async (req, res) => {
-    const users = await User.find({});
-    res.status(200).json(users);
-}));
 
 router.post('/adduser', asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
@@ -43,10 +36,22 @@ router.post('/adduser', asyncHandler(async (req, res) => {
     res.redirect('/');
 }));
 
-// router.get('/home', (req, res) => {
-//     console.log(req.query);
-//     res.redirect('/');
-// });
+router.post('/login', asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+        res.redirect('/');
+    }
+        
+    const user = await User.findOne({ email }).lean();
 
+    if (user && await bcrypt.compare(password, user.password)) {
+        // req.session.user = user;
+        res.redirect('/tasks');
+    }
+    res.redirect('/');
+
+
+}));
 
 export default router;
