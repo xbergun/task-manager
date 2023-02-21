@@ -40,16 +40,16 @@ router.post('/login', asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     
     if (!email || !password) {
-        res.redirect('/');
+       return res.redirect('/');
     }
         
     const user = await User.findOne({ email }).lean();
 
     if (user && await bcrypt.compare(password, user.password)) {
         // req.session.user = user;
-        res.redirect('/tasks');
+       return res.redirect('/tasks');
     }
-    res.redirect('/');
+    return res.redirect('/');
 
 
 }));
