@@ -6,11 +6,6 @@ import Task from "../models/Task.js";
 
 // Controllers functions
 
-const getAllTasks = asyncErrorHandler(async (req, res) => {
-  const tasks = await Task.find();
-  return res.render("home", { tasks });
-});
-
 const addNewTask = asyncErrorHandler(async (req, res, next) => {
   const {title} = req.body;
   await Task.create({title});
@@ -43,4 +38,4 @@ const deleteTask = asyncErrorHandler(async (req, res, next) => {
     .json({ success: true, msg: "Task deleted", task: task });
 });
 
-export { getAllTasks, addNewTask, updateTask, deleteTask };
+export {addNewTask, updateTask, deleteTask };

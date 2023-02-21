@@ -4,7 +4,11 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 //? Routers
-import routers from './routers/index.js';
+import pageRouter from './routers/pageRouter.js';
+import apiRouter from './routers/apiRouter.js';
+import tasksRouter from './routers/taskRouter.js';
+import userRouter from './routers/userRouter.js';
+// Helpers
 import connectToDb from './helpers/Database/ConnectToDb.js';
 
 //? Definitions
@@ -23,7 +27,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', routers);
+//? Routes
+app.use('/', pageRouter);
+app.use('/api', apiRouter);
+app.use('/tasks', tasksRouter)
+app.use('/users', userRouter)
 
 
 connectToDb().then(() => {
