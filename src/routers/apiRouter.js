@@ -14,4 +14,8 @@ router.get('/alltasks', async(req, res) => {
     return res.status(200).json({message: "All tasks", tasks: tasks});
 });
 
+router.get('/tokentest', async(req, res) => {
+    return res.status(200).json({message: "Token test"});
+});
+
 export default router;
