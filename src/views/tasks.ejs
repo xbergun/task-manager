@@ -10,18 +10,26 @@
               <p class="h1 text-center mt-3 mb-4 pb-3 text-primary">
                 <i class="fas fa-check-square me-1"></i>
                 <u>My Todo-s</u>
+                <p><%= user.name %></p>
+                <% if (!user.tasks) { %>
+                  <p>No tasks yet</p>
+                  
+                  <% } else { %>
+                    <p>Tasks: <%= user.tasks.length %></p>
+                    <% } %>
               </p>
   
               <div class="pb-2">
                 <div class="card">
                   <div class="card-body">
-                <form action="/tasks/add-task" method="post">
+                <form action="/tasks/add-task" method="post" >
                     <div class="d-flex flex-row align-items-center">
                       <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
                         placeholder="Add new task.." name="title">
                       <a href="#!" data-mdb-toggle="tooltip" title="Set due date"><i
                           class="fas fa-calendar-alt fa-lg me-3"></i></a>
                       <div>
+                        <input type="hidden" name="userId" value="<%= user.id %>">
                         <button type="submit" class="btn btn-primary">Add</button>
                       </div>
                 </form>

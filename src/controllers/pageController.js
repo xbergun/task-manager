@@ -10,8 +10,16 @@ const getRegisterPage = asyncHandler(async (req, res) => {
 });
 
 const getTasksPage = asyncHandler(async (req, res) => {
-    res.render("home");
+    res.status(200).render("tasks",{
+        user: req.user,
+    });
+});
+
+const getUserProfilePage = asyncHandler(async (req, res) => {
+    res.status(200).render("profile", {
+        user: req.user,
+    });
 });
 
 
-export {getLoginPage, getRegisterPage, getTasksPage};
+export {getLoginPage, getRegisterPage, getTasksPage, getUserProfilePage};
