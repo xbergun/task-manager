@@ -1,7 +1,11 @@
 <%- include('partials/_header.ejs') -%> 
 
-<section class="vh-100">
-    <div class="container py-5 h-100">
+<section class="vh-100 bg-dark">
+  
+  <div class="container py-5 h-100">
+    <div>
+      <a href="users/logout">LOGOUT</a>
+    </div>
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col">
           <div class="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
@@ -9,7 +13,7 @@
   
               <p class="h1 text-center mt-3 mb-4 pb-3 text-primary">
                 <i class="fas fa-check-square me-1"></i>
-                <u>My Todo-s</u>
+                <u class="text-decoration-none ">My Task List</u>
                 <p><%= user.name %></p>
                 <% if (!user.tasks) { %>
                   <p>No tasks yet</p>

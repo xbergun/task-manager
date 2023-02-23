@@ -1,10 +1,12 @@
 import User from "../Models/User.js";
-import asyncHandler from "express-async-handler";
-import bcrypt from "bcryptjs";
-import {sendJwtToClient} from '../helpers/auth/tokenHelpers.js';
-import { comparePasswords, validateUserInput } from "../helpers/inputHelpers.js";
+import asyncErrorWrapper from "express-async-handler";
+import { sendJwtToClient } from "../helpers/auth/tokenHelpers.js";
+import {
+  comparePasswords,
+  validateUserInput,
+} from "../helpers/inputHelpers.js";
 
-const addUser = asyncHandler(async (req, res) => {
+const addUser = asyncErrorWrapper(async (req, res) => {
   const { name, email, password } = req.body;
 
   const user = await User.create({
@@ -13,11 +15,10 @@ const addUser = asyncHandler(async (req, res) => {
     password,
   });
 
- sendJwtToClient(user, res)
-
+  sendJwtToClient(user, res, "/");
 });
 
-const loginUser = asyncHandler(async (req, res) => {
+const loginUser = asyncErrorWrapper(async (req, res) => {
   const { email, password } = req.body;
 
   if (!validateUserInput(email, password)) {
@@ -29,16 +30,24 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email }).select("+password");
 
-
-  if (!user || !comparePasswords(password, user.password) ) {
+  if (!user || !comparePasswords(password, user.password)) {
     return res.status(400).json({
       success: false,
       message: "Please check your credentials",
-    });  
+    });
   }
   sendJwtToClient(user, res, "/tasks");
-  
+});
+
+const logoutUser = asyncErrorWrapper(async (req, res) => {
+  res.cookie("access_token", null, {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+
+  return res.status(200).redirect("/");
+
 
 });
 
-export { addUser, loginUser };
+export { addUser, loginUser, logoutUser };
