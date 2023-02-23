@@ -10,12 +10,12 @@ const addNewTask = asyncErrorHandler(async (req, res, next) => {
     const {title} = req.body;
     const {id} = req.user;
 
-    const task = await Task.create({
+    await Task.create({
         title,
         user: id
     });
 
-    return res.status(201).json({success: true, msg: "Task created", task: task});
+    return res.status(201).redirect("/tasks");
 
   
 });
@@ -35,14 +35,9 @@ const updateTask = asyncErrorHandler(async (req, res, next) => {
 
 const deleteTask = asyncErrorHandler(async (req, res, next) => {
   const { id } = req.params;
-  const task = await Task.findById(id);
-  if (!task) {
-    return res.status(404).json({ success: false, msg: "Task not found" });
-  }
-  await task.remove();
-  return res
-    .status(200)
-    .json({ success: true, msg: "Task deleted", task: task });
+  await Task.findByIdAndDelete(id);
+  return res.status(200).redirect("/tasks");
+
 });
 
 export {addNewTask, updateTask, deleteTask };

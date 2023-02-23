@@ -7,6 +7,7 @@ import {
   getRegisterPage,
   getTasksPage,
   getUserProfilePage,
+  forgotPasswordPage
 } from "../controllers/pageController.js";
 import checkAccessToRoute from "../middlewares/auth.js";
 
@@ -23,5 +24,7 @@ router.get("/register", getRegisterPage);
 router.get("/tasks", checkAccessToRoute,getTasksPage);
 
 router.get("/profile", checkAccessToRoute, getUserProfilePage);
+
+router.get('/forgot-password', forgotPasswordPage);
 
 export default router;

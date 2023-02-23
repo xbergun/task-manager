@@ -16,7 +16,6 @@ const checkAccessToRoute = (req, res, next) => {
             return res.status(401).redirect("/");
         }
        
-        console.log(decoded);
         req.user = {
             id: decoded.id,
             name: decoded.name,

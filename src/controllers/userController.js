@@ -50,4 +50,19 @@ const logoutUser = asyncErrorWrapper(async (req, res) => {
 
 });
 
-export { addUser, loginUser, logoutUser };
+const forgotPassword = asyncErrorWrapper(async (req, res) => {
+  const resetEmail = req.body.email;
+
+  const user = await User.findOne({ email: resetEmail });
+
+  if (!user) {
+    return res.status(400).json({
+      success: false,
+      message: "There is no user with that email",
+    });
+  }
+
+  
+});
+
+export { addUser, loginUser, logoutUser ,forgotPassword};
