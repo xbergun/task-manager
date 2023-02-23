@@ -1,6 +1,7 @@
 import express from 'express';
 import User from '../Models/User.js';
 import Task from '../Models/Task.js';
+import checkAccessToRoute from './../middlewares/auth.js';
 const router = express.Router();
 
 
@@ -14,7 +15,7 @@ router.get('/alltasks', async(req, res) => {
     return res.status(200).json({message: "All tasks", tasks: tasks});
 });
 
-router.get('/tokentest', async(req, res) => {
+router.get('/tokentest', checkAccessToRoute,async(req, res) => {
     return res.status(200).json({message: "Token test"});
 });
 

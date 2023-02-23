@@ -1,7 +1,8 @@
 import User from "../Models/User.js";
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
-import sendJwtToClient from './../helpers/auth/sendJwtToClient.js';
+import {sendJwtToClient} from '../helpers/auth/tokenHelpers.js';
+import { comparePasswords, validateUserInput } from "../helpers/inputHelpers.js";
 
 const addUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -19,17 +20,25 @@ const addUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.redirect("/");
+  if (!validateUserInput(email, password)) {
+    return res.status(400).json({
+      success: false,
+      message: "Please check your inputs",
+    });
   }
 
-  const user = await User.findOne({ email }).lean();
+  const user = await User.findOne({ email }).select("+password");
 
-  if (user && (await bcrypt.compare(password, user.password))) {
-    // req.session.user = user;
-    return res.redirect("/tasks");
+
+  if (!user || !comparePasswords(password, user.password) ) {
+    return res.status(400).json({
+      success: false,
+      message: "Please check your credentials",
+    });  
   }
-  return res.redirect("/");
+  sendJwtToClient(user, res, "/tasks");
+  
+
 });
 
 export { addUser, loginUser };
