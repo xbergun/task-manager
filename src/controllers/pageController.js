@@ -10,7 +10,9 @@ const getRegisterPage = asyncHandler(async (req, res) => {
 });
 
 const getTasksPage = asyncHandler(async (req, res) => {
-    res.render("tasks");
+    res.status(200).render("tasks",{
+        user: req.user,
+    });
 });
 
 const getUserProfilePage = asyncHandler(async (req, res) => {

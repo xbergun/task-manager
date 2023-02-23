@@ -3,14 +3,21 @@ import asyncErrorHandler from "express-async-handler";
 
 //? Models
 import Task from "../models/Task.js";
-
+import User from "../models/User.js";
 // Controllers functions
 
 const addNewTask = asyncErrorHandler(async (req, res, next) => {
-  const {title} = req.body;
-  await Task.create({title});
-  return res.redirect('/tasks');
+    const {title} = req.body;
+    const {id} = req.user;
 
+    const task = await Task.create({
+        title,
+        user: id
+    });
+
+    return res.status(201).json({success: true, msg: "Task created", task: task});
+
+  
 });
 
 const updateTask = asyncErrorHandler(async (req, res, next) => {

@@ -42,6 +42,7 @@ UserSchema.methods.generateJwt = function () {
     const payload = {
         id: user._id,
         name: user.name,
+        tasks: user.tasks,
     };
     const token = jwt.sign(payload, JWT_SECRET, {
         expiresIn: JWT_EXPIRES_IN,
